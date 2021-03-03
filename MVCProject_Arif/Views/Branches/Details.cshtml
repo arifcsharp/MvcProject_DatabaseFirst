@@ -1,0 +1,85 @@
+﻿@model MVCProject_Arif.Models.Branch
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_masterLayout.cshtml";
+}
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#examInfo").mouseover(function () {
+            $.ajax({
+                url: "@Url.Action("LoanDetails", "Branch", new { id=Model.BranchID})",
+                type: "get",
+                dataType: "json",
+                success: function (result) {
+                    $("#examdisplay table tbody").empty;
+                    for (var i = 0; i < result.length; i++) {
+                        $("#examdisplay table tbody").append("<tr><td>" + result[i].customerName + "</td><td>" + result[i].issueDate + "</td><td>" + result[i].totalAmount + "</td></tr>");
+                    }
+                    $("#examdisplay").show();
+                }
+            });
+            this.disabled = true;
+        })
+
+
+    })
+
+
+
+</script>
+
+<h2>Details</h2>
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <fieldset>
+                <dl class="dl-horizontal">
+                    <dt>
+                        @Html.DisplayNameFor(model => model.BranchName)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.BranchName)
+                    </dd>
+
+                    <dt>
+                        @Html.DisplayNameFor(model => model.City)
+                    </dt>
+
+                    <dd>
+                        @Html.DisplayFor(model => model.City)
+                    </dd>
+
+                </dl>
+            </fieldset>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.BranchID }) |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div>
+                <button class="btn btn-info" id="examInfo" data-exam-id="@Model.BranchID">Loan Details</button>
+            </div>
+            <div id="examdisplay" style="display:none">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>Customer Name</tr>
+                        <tr>Issue Date</tr>
+                       
+                        <tr>Total Amount</tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

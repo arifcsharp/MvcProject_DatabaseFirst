@@ -1,0 +1,12 @@
+﻿@model IEnumerable<MVCProject_Arif.Models.Employee>
+@{
+    ViewBag.Title = "Partial_Employee";
+}
+
+<h2>Partial_Employee</h2>
+
+
+@foreach (var item in Model)
+{
+    @Html.Partial("_Employee", item)
+}
